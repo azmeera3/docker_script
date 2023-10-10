@@ -28,7 +28,7 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 sh "docker login -u azmeera3 -p Srikrishna1!"
-                sh "docker push azmeera3/my-docker-image:latest"
+                sh "docker push azmeera3/my-docker-image:latest1"
 
             }
         }
