@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+    environment {
+        AWS_CREDENTIALS = credentials('aws_credentials')
+        EC2_INSTANCE_IP = '3.144.162.243'
+    }
+    stages {
+        stage('Pull and Deploy Containers') {
+            steps {
+                script {
+                    sh "docker login -u azmeera3 -p ganga@123"
+                    sh "docker pull azmeera3/my-docker-image3:latest"
+                    sh "docker pull azmeera3/my-docker-image:latest"
+                    
+                    // Use the SSH key credential directly
+                    withCredentials([sshUserPrivateKey(credentialsId: 'jenkins.pem', keyFileVariable: 'SSH_KEY')]) {
+                        sh """
+                            ssh -i $SSH_KEY -o StrictHostKeyChecking=no ec2-user@${EC2_INSTANCE_IP} << EOF
+                            docker pull azmeera3/my-docker-image3:latest
+                            docker run -d -p 3000:3000 azmeera3/my-docker-image3:latest
+                            docker pull azmeera3/my-docker-image:latest
+                            docker run -d -p 5000:5000 azmeera3/my-docker-image:latest
+                            >> EOF
+                        """
+                    }
+                }
+            }
+        }
+    }
+}
