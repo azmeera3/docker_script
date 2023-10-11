@@ -1,6 +1,6 @@
 FROM node:20-alpine
 
-WORKDIR /gangadhar/app/
+WORKDIR /abhi/app/
 
 COPY package.json .
 COPY helloworld.js .
