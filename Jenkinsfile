@@ -21,14 +21,14 @@ pipeline {
         stage('Build') {
             steps {
          
-                sh "docker build -t azmeera3/my-docker-image2 \${WORKSPACE}"
+                sh "docker build -t azmeera3/my-docker-image5000 \${WORKSPACE}"
             }
         }
 
         stage('Push to Docker Hub') {
             steps {
-                sh "docker login -u azmeera3 -p Srikrishna1!"
-                sh "docker push azmeera3/my-docker-image2:latest"
+                sh "docker login -u azmeera3 -p ganga@123"
+                sh "docker push azmeera3/my-docker-image5000:latest"
 
             }
         }
